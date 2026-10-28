@@ -605,8 +605,8 @@ function formatPresenters_(sheet, ss) {
   sheet.getRange("B1").setNote("순위는 부문마다 따로 매깁니다. 비워 두면 발표유형 이름을 부문으로 씁니다.");
   sheet.getRange("C1").setNote("심사가 시작된 뒤에는 이름을 바꾸지 마세요. 제출된 결과를 이름으로 맞춥니다.");
   sheet.getRange("D1").setNote("Alt+Enter로 줄을 바꾸면 화면에서도 줄이 바뀝니다 (국문·영문 제목을 두 줄로).");
-  sheet.getRange("E1").setNote("이 머리글이 화면에 그대로 나옵니다 (예: 지도교수, 소속). 비워 두어도 됩니다.");
-  sheet.getRange("F1").setNote("예: 13:00 - 13:20. 한 부문의 발표자가 모두 같은 시간이면 부문 시간으로 보여 줍니다.");
+  sheet.getRange("E1").setNote("주최 측 참고용 칸입니다. 심사 화면에는 나오지 않습니다. 비워 두어도 됩니다.");
+  sheet.getRange("F1").setNote("주최 측 참고용 칸입니다 (예: 13:00 - 13:20). 심사 화면에는 나오지 않습니다.");
   const criteria = ss.getSheetByName(TAB.criteria);
   if (criteria) {
     const rule = SpreadsheetApp.newDataValidation().requireValueInRange(criteria.getRange("A2:A"), true).setAllowInvalid(true).build();

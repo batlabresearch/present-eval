@@ -93,9 +93,7 @@
   }
 
   // 휴대폰 뒤로가기를 누르면 사이트를 벗어나지 않고 첫 화면으로 돌아간다
-  // (발표 순서 목록이 열려 있으면 목록만 닫는다)
   window.addEventListener("popstate", () => {
-    if (!scheduleEl.hidden) { hideSchedule(); return; }
     if (!screens.start.hidden) return;
     renderStart();
     showScreen("start");
@@ -479,82 +477,82 @@
     showScreen("start");
   });
 
-  /* ── 발표 순서 · 시간 ─────────────────────────────────────── */
-  const scheduleEl = $("#schedule");
-  let scheduleReturnFocus = null;
+  /* ── 관리자 페이지로 가기 ─────────────────────────────────── */
+  // 비밀번호를 먼저 시트에 확인하고, 맞을 때만 관리자 화면으로 넘어간다.
+  // 확인한 비밀번호는 이 탭의 sessionStorage에 넘겨서 관리자 화면이 다시 묻지 않게 한다 (탭을 닫으면 지워짐).
+  const ADMIN_PASSWORD_KEY = common.key("admin-password");   // admin.js와 같은 이름
 
-  const splitRange = (range) => String(range || "").split(/\s*[-–~]\s*/).filter(Boolean);
-  const toMinutes = (hhmm) => {
-    const m = /(\d{1,2}):(\d{2})/.exec(hhmm || "");
-    return m ? Number(m[1]) * 60 + Number(m[2]) : Infinity;
-  };
+  function goAdmin(password) {
+    if (password) {
+      try { window.sessionStorage.setItem(ADMIN_PASSWORD_KEY, password); } catch (e) { /* 저장이 막히면 관리자 화면에서 한 번 더 묻는다 */ }
+    }
+    window.location.href = common.pageLink("admin.html");
+  }
 
-  // 부문마다 하나의 세션으로 묶고 시작 시각 순서로 정렬 (포스터 11:00 → 신입 13:00 → …)
-  function sessions() {
-    const list = [];
-    typeKeys.forEach((type) => {
-      const t = config.types[type];
-      t.categories.forEach((cat) => {
-        const own = cat.presenters.map((p) => splitRange(p.time)).filter((r) => r.length);
-        const span = cat.time ? splitRange(cat.time)
-          : own.length ? [own[0][0], own[own.length - 1][1] || own[own.length - 1][0]] : [];
-        list.push({ typeLabel: t.label, label: cat.label, start: span[0] || "", end: span[1] || "", shared: !own.length, presenters: cat.presenters });
-      });
+  function openAdminGate() {
+    if (api.isDemo) { goAdmin(); return; }   // 샘플 행사에는 비밀번호가 없다
+
+    const lastFocus = document.activeElement;
+    const backdrop = document.createElement("div");
+    backdrop.className = "modal-backdrop";
+    backdrop.innerHTML = `
+      <form class="modal" role="dialog" aria-modal="true" aria-labelledby="admin-gate-title" novalidate>
+        <h2 class="modal__title" id="admin-gate-title">관리자 페이지</h2>
+        <div class="modal__body">
+          <label class="field">
+            <span class="field__label">관리자 비밀번호</span>
+            <input class="input" type="password" autocomplete="current-password" required>
+          </label>
+          <p class="login__error" data-role="error" role="alert" hidden></p>
+        </div>
+        <div class="modal__actions">
+          <button type="button" class="btn" data-role="cancel">취소</button>
+          <button type="submit" class="btn btn-primary" data-role="ok">확인</button>
+        </div>
+      </form>`;
+    const form = backdrop.querySelector("form");
+    const input = form.querySelector("input");
+    const error = form.querySelector('[data-role="error"]');
+    const ok = form.querySelector('[data-role="ok"]');
+
+    const close = () => {
+      if (ok.disabled) return;   // 확인 중에는 닫지 않는다
+      document.removeEventListener("keydown", onKey);
+      backdrop.remove();
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    };
+    const onKey = (e) => { if (e.key === "Escape") close(); };
+    backdrop.addEventListener("click", (e) => {
+      if (e.target === backdrop || e.target.closest('[data-role="cancel"]')) close();
     });
-    return list.sort((a, b) => toMinutes(a.start) - toMinutes(b.start));
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const password = input.value;
+      if (!password) { input.focus(); return; }
+      ok.disabled = true;
+      ok.textContent = "확인 중…";
+      error.hidden = true;
+      try {
+        await api.fetchResults(password);
+        goAdmin(password);
+      } catch (err) {
+        // 시트 설정 오류는 비밀번호 확인을 통과한 뒤에 나오는 오류라서, 관리자 화면에서 자세히 보여 준다
+        if (err.code === "config_invalid") { goAdmin(password); return; }
+        ok.disabled = false;
+        ok.textContent = "확인";
+        error.textContent = err.message;
+        error.hidden = false;
+        input.select();
+      }
+    });
+
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(backdrop);
+    input.focus();
   }
 
-  function renderSchedule() {
-    $("#schedule-body").innerHTML = sessions().map((s) => `
-      <section class="sess${s.shared ? " sess--shared" : ""}">
-        <header class="sess__head">
-          ${s.start ? `<p class="sess__time">${escapeHtml(s.start)}${s.end ? `–${escapeHtml(s.end)}` : ""}</p>` : ""}
-          <div class="sess__title">
-            <h3 class="sess__name">${escapeHtml(s.label)}</h3>
-            <span class="sess__meta">${escapeHtml(s.typeLabel)} · ${s.presenters.length}명</span>
-          </div>
-        </header>
-        <ol class="sess__list">
-          ${s.presenters.map((p, i) => `
-            <li class="slot">
-              <span class="slot__no">${pad2(i + 1)}</span>
-              <span class="slot__time">${escapeHtml(splitRange(p.time)[0] || "")}</span>
-              <div>
-                <p class="slot__who"><b>${escapeHtml(p.name)}</b>${p.advisor ? `<span>${escapeHtml([config.advisorLabel, p.advisor].filter(Boolean).join(" "))}</span>` : ""}</p>
-                ${p.topic ? `<p class="slot__topic">${escapeHtml(p.topic)}</p>` : ""}
-              </div>
-            </li>`).join("")}
-        </ol>
-      </section>`).join("");
-  }
-
-  function openSchedule() {
-    renderSchedule();
-    scheduleReturnFocus = document.activeElement;
-    scheduleEl.hidden = false;
-    document.body.classList.add("is-locked");
-    $("#schedule-body").scrollTop = 0;
-    history.pushState({ screen: "schedule" }, "");   // 휴대폰 뒤로가기로도 닫히게
-    $("#schedule-close").focus();
-  }
-
-  function hideSchedule() {
-    scheduleEl.hidden = true;
-    document.body.classList.remove("is-locked");
-    if (scheduleReturnFocus && scheduleReturnFocus.focus) scheduleReturnFocus.focus();
-  }
-
-  function closeSchedule() {
-    if (history.state && history.state.screen === "schedule") history.back();   // popstate에서 닫힘
-    else hideSchedule();
-  }
-
-  $("#schedule-open").addEventListener("click", openSchedule);
-  $("#schedule-close").addEventListener("click", closeSchedule);
-  scheduleEl.addEventListener("click", (e) => { if (e.target === scheduleEl) closeSchedule(); });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !scheduleEl.hidden && !document.querySelector(".modal-backdrop")) closeSchedule();
-  });
+  $("#admin-open").addEventListener("click", openAdminGate);
 
   /* ── 대화상자 ─────────────────────────────────────────────── */
   function showDialog({ title, body, actions }) {

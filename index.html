@@ -36,7 +36,7 @@
           <span class="title-block__main" data-bind="hero-display"></span>
           <span class="title-block__sub" data-bind="hero-display-sub"></span>
         </h1>
-        <p class="title-block__role">심사위원 평가</p>
+        <p class="title-block__role">융합의학과 제공</p>
       </div>
 
       <form class="entry" id="start-form" data-state="loading" novalidate>
@@ -58,26 +58,12 @@
         <button class="go" id="start-btn" type="submit" disabled>
           <span>평가 시작</span><span class="go__arrow" aria-hidden="true">→</span>
         </button>
-        <button class="ghost-btn ghost-btn--split" id="schedule-open" type="button" aria-haspopup="dialog">
-          <span>발표 순서 · 시간 보기</span><span class="go__arrow" aria-hidden="true">↗</span>
+        <button class="ghost-btn ghost-btn--split" id="admin-open" type="button" aria-haspopup="dialog">
+          <span>관리자 페이지</span><span class="go__arrow" aria-hidden="true">↗</span>
         </button>
       </form>
     </div>
   </section>
-
-  <!-- 발표 순서·시간 (첫 화면 버튼으로 여는 전체 화면 목록) -->
-  <div class="schedule" id="schedule" role="dialog" aria-modal="true" aria-labelledby="schedule-title" hidden>
-    <div class="schedule__panel">
-      <header class="schedule__head">
-        <div>
-          <p class="schedule__event" data-bind="event-title"></p>
-          <h2 class="schedule__title" id="schedule-title">발표 순서 · 시간</h2>
-        </div>
-        <button class="schedule__close" type="button" id="schedule-close">닫기</button>
-      </header>
-      <div class="schedule__body" id="schedule-body"></div>
-    </div>
-  </div>
 
   <!-- 2. 평가 화면 (심사표) -->
   <section class="sheet" id="screen-eval" hidden>
