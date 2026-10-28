@@ -18,12 +18,13 @@
  * 시트에는 등급(A~E)만 저장합니다. 점수는 관리자 화면이 [평가항목] 탭의 점수표로 그때그때 계산합니다.
  */
 
+/**
+ * 권한은 이 코드가 붙어 있는 시트 하나에만 받습니다 (다른 드라이브 파일은 읽지 않음).
+ * @OnlyCurrentDoc
+ */
+
 // 심사 화면이 올라가 있는 주소 (끝의 / 포함). 심사위원 링크와 관리자 링크를 만들 때 씁니다.
 const APP_URL = "https://batlabresearch.github.io/present-eval/";
-
-// 이 시트의 [확장 프로그램 → Apps Script]로 만들었다면 비워 두세요.
-// script.google.com에서 따로 만든 프로젝트라면 시트 주소의 /d/ 와 /edit 사이 글자(시트 ID)를 넣으세요.
-const SPREADSHEET_ID = "";
 
 const TAB = { settings: "설정", criteria: "평가항목", presenters: "발표자", log: "제출기록" };
 const RESPONSE_PREFIX = "응답_";
@@ -614,8 +615,9 @@ function formatPresenters_(sheet, ss) {
 }
 
 /* ── 도우미 ──────────────────────────────────────────────────── */
+// 이 코드가 붙어 있는 시트 (웹 앱으로 불려도 같은 시트)
 function spreadsheet_() {
-  return SPREADSHEET_ID ? SpreadsheetApp.openById(SPREADSHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+  return SpreadsheetApp.getActiveSpreadsheet();
 }
 
 function getSheet_(ss, name) {
