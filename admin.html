@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>심사 결과</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="demo-banner" id="demo-banner" hidden>
+    샘플 화면입니다 — 시트와 연결되지 않아 이 브라우저에서 제출한 테스트 결과만 보입니다.
+    <a href="guide.html">행사 만들기 안내 →</a>
+  </div>
+
+  <main class="app app--wide">
+    <!-- 로그인 -->
+    <form class="card login" id="login-form" hidden>
+      <div>
+        <p class="admin-head__event" data-bind="event-title"></p>
+        <h1 class="admin-head__title">심사 결과 (관리자)</h1>
+      </div>
+      <label class="field">
+        <span class="field__label">관리자 비밀번호</span>
+        <input class="input" id="password" type="password" autocomplete="current-password" required>
+      </label>
+      <p class="login__error" id="login-error" hidden></p>
+      <button class="btn btn-primary btn-block" type="submit" id="login-btn">결과 보기</button>
+    </form>
+
+    <!-- 결과 -->
+    <div id="results" hidden>
+      <header class="admin-head">
+        <div>
+          <p class="admin-head__event" data-bind="event-title"></p>
+          <h1 class="admin-head__title">심사 결과</h1>
+        </div>
+        <div class="admin-toolbar">
+          <span class="muted" id="loaded-at"></span>
+          <button class="btn btn-sm" type="button" id="refresh-btn">새로고침</button>
+          <button class="btn btn-sm" type="button" id="csv-btn">엑셀(CSV) 내려받기</button>
+          <button class="btn btn-sm" type="button" id="print-btn">인쇄</button>
+          <button class="btn btn-sm btn-ghost" type="button" id="clear-demo-btn" hidden>테스트 결과 지우기</button>
+        </div>
+      </header>
+
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div id="panels"></div>
+    </div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="assets/sample-config.js"></script>
+  <script src="assets/common.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

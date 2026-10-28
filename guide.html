@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a1733">
+  <title>행사 만들기 안내 · 발표 심사 평가</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="guide-head">
+    <div class="guide-head__inner">
+      <p class="guide-head__kicker">발표 심사 평가 · 주최자 안내</p>
+      <h1>구글 시트 하나로 발표 심사 준비하기</h1>
+      <p class="guide-head__lead">
+        시트에 행사명, 평가항목, 발표자 명단을 적으면 심사위원은 휴대폰으로 링크를 열어 평가하고,
+        주최 측은 관리자 화면에서 부문별 순위를 바로 봅니다. 결과는 주최 측 구글 계정의 시트에만 저장됩니다.
+      </p>
+      <div class="guide-head__actions">
+        <a class="ghost-btn ghost-btn--split" href="./"><span>샘플 심사 화면</span><span class="go__arrow" aria-hidden="true">↗</span></a>
+        <a class="ghost-btn ghost-btn--split" href="admin.html"><span>샘플 관리자 화면</span><span class="go__arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="guide">
+    <section>
+      <h2 class="cat-title"><span class="cat-title__no">01</span><span class="cat-title__name">시트 준비</span><span class="cat-title__count">처음 5분</span></h2>
+
+      <div class="card guide-card" id="template-way" hidden>
+        <h3>방법 1. 템플릿 시트 복사</h3>
+        <p>아래 버튼을 누르면 내 구글 드라이브에 샘플이 든 시트가 복사됩니다. 코드도 함께 복사되니 02로 넘어가세요.</p>
+        <p><a class="btn btn-primary" id="template-link" href="#" target="_blank" rel="noopener">템플릿 시트 사본 만들기 ↗</a></p>
+      </div>
+
+      <div class="card guide-card">
+        <h3 id="code-way-title">새 시트에 코드 붙여 넣기</h3>
+        <ol class="steps">
+          <li><a href="https://sheets.new" target="_blank" rel="noopener">sheets.new</a>에서 빈 구글 시트를 만들고 이름을 정합니다. (예: 2026 춘계 학술대회 심사)</li>
+          <li>메뉴 <b>[확장 프로그램 → Apps Script]</b>를 엽니다.</li>
+          <li>편집기에 있는 내용을 모두 지우고, 아래 버튼으로 복사한 코드를 붙여 넣은 뒤 저장(Ctrl+S)합니다.
+            <div class="guide-code">
+              <button class="btn btn-sm" type="button" id="copy-code-btn">코드 복사</button>
+              <a class="link-btn" href="apps-script/Code.gs" target="_blank" rel="noopener">코드 파일 열기</a>
+              <span class="guide-code__msg" id="copy-code-msg" aria-live="polite"></span>
+            </div>
+          </li>
+          <li>시트 탭으로 돌아와 새로고침하면 메뉴에 <b>[발표 심사]</b>가 생깁니다. <b>[발표 심사 → 처음 설정]</b>을 누릅니다.</li>
+          <li>처음 한 번 권한 승인 창이 뜹니다. 본인 계정을 고르고 허용합니다. "Google에서 확인하지 않은 앱"이 나오면 <b>[고급 → (프로젝트 이름)(으)로 이동]</b>을 누릅니다. 내가 만든 코드라서 나오는 경고입니다.</li>
+        </ol>
+        <p class="muted small">샘플 내용이 든 [설정]·[평가항목]·[발표자] 탭이 생깁니다.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="cat-title"><span class="cat-title__no">02</span><span class="cat-title__name">시트 채우기</span><span class="cat-title__count">탭 3개</span></h2>
+      <div class="table-wrap">
+        <table class="table guide-table">
+          <thead><tr><th>탭</th><th>적는 것</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="name">설정</td>
+              <td>행사명, <b>관리자 비밀번호</b>(꼭 적어야 결과를 볼 수 있음), 첫 화면 문구(큰 제목, 슬로건, 기관명), 의견 칸 이름. 왼쪽 칸의 이름은 바꾸지 마세요.</td>
+            </tr>
+            <tr>
+              <td class="name">평가항목</td>
+              <td>한 줄에 항목 하나: <b>발표유형 · 평가항목 · 배점 · A~E 점수</b>. 화면에 위에서부터 이 순서로 나옵니다. A~E 칸을 비워 두면 배점의 100·90·80·70·60%로 계산합니다. 배점 합이 꼭 100일 필요는 없습니다.</td>
+            </tr>
+            <tr>
+              <td class="name">발표자</td>
+              <td>한 줄에 발표자 한 명: <b>발표유형 · 부문 · 이름 · 발표주제 · 지도교수 · 발표시간</b>. 적은 순서대로 화면에 나옵니다. 지도교수 칸의 머리글은 '소속'처럼 바꿔도 되고, 바꾼 이름이 화면에 나옵니다.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ul class="guide-list">
+        <li><b>발표유형</b> 이름(예: 구두발표, 포스터발표)은 [평가항목]과 [발표자] 탭에서 글자까지 같아야 합니다. 발표유형이 하나뿐이어도 됩니다.</li>
+        <li><b>순위는 부문마다</b> 따로 매깁니다. 부문을 비워 두면 발표유형 이름을 부문으로 씁니다.</li>
+        <li>발표시간은 <code>13:00 - 13:20</code>처럼 적습니다. 한 부문의 발표자가 모두 같은 시간이면(포스터 세션처럼) 부문 시간으로 보여 줍니다.</li>
+        <li>다 적은 뒤 <b>[발표 심사 → 설정 점검]</b>을 누르면 빠뜨린 것이나 잘못 적은 줄을 알려 줍니다.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="cat-title"><span class="cat-title__no">03</span><span class="cat-title__name">웹 앱으로 배포</span><span class="cat-title__count">처음 한 번</span></h2>
+      <ol class="steps">
+        <li><b>[확장 프로그램 → Apps Script]</b>에서 오른쪽 위 <b>[배포 → 새 배포]</b>를 누릅니다.</li>
+        <li>유형 선택(톱니바퀴)에서 <b>웹 앱</b>을 고릅니다.</li>
+        <li><b>다음 사용자 인증 정보로 실행: 나</b>, <b>액세스 권한이 있는 사용자: 모든 사용자</b>로 두고 [배포]를 누릅니다.</li>
+        <li>배포가 끝나면 나오는 <b>웹 앱 URL</b>을 엽니다. 심사위원 링크와 관리자 링크가 나옵니다.</li>
+      </ol>
+      <p class="notice guide-note">
+        링크는 나중에 시트 메뉴 <b>[발표 심사 → 심사 링크 보기]</b>에서 다시 볼 수 있습니다.
+        시트 내용(명단, 점수표, 문구)을 고칠 때는 다시 배포하지 않아도 바로 반영됩니다.
+      </p>
+      <p class="muted small guide-note">학교·기관(Google Workspace) 계정에는 '모든 사용자'가 없을 수 있습니다. 그럴 때는 개인 Gmail 계정으로 시트를 만드세요.</p>
+    </section>
+
+    <section>
+      <h2 class="cat-title"><span class="cat-title__no">04</span><span class="cat-title__name">행사 당일</span></h2>
+      <div class="table-wrap">
+        <table class="table guide-table">
+          <tbody>
+            <tr>
+              <td class="name">심사위원</td>
+              <td>심사위원 링크를 열고 이름을 적은 뒤 발표유형을 고릅니다. 발표자마다 항목별로 등급을 고르고 제출합니다. 입력 내용은 그 기기에 자동 저장되고, 같은 이름으로 다시 제출하면 이전 제출을 덮어씁니다. 이름은 매번 똑같이 적어야 합니다(<code>이교수</code>와 <code>이 교수</code>는 다른 사람으로 셉니다).</td>
+            </tr>
+            <tr>
+              <td class="name">주최 측</td>
+              <td>관리자 링크를 열고 [설정] 탭의 비밀번호를 넣습니다. 부문별 순위, 심사위원별 점수와 등급, 의견, 제출 현황을 보고, 엑셀(CSV)로 내려받거나 인쇄할 수 있습니다. [새로고침]을 누르면 최신 제출이 반영됩니다.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted small guide-note">심사위원 링크는 QR 코드로 만들어 행사장에 붙여 두면 편합니다. 관리자 링크는 비밀번호가 있어야 열리지만 공유하지 않는 것이 좋습니다.</p>
+    </section>
+
+    <section>
+      <h2 class="cat-title"><span class="cat-title__no">05</span><span class="cat-title__name">심사 중에 고칠 때</span></h2>
+      <div class="table-wrap">
+        <table class="table guide-table">
+          <thead><tr><th>언제 고쳐도 되는 것</th><th>심사가 시작되면 바꾸지 말 것</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>발표주제, 발표시간, 지도교수, 문구<br>점수표(배점, A~E 점수): 이미 제출된 결과도 새 점수표로 다시 계산됩니다</td>
+              <td>발표자 이름, 발표유형 이름, 부문 이름<br>평가항목의 순서와 개수<br><span class="muted">제출된 결과를 이름과 항목 순서로 맞추기 때문입니다</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted small guide-note">발표자를 새로 추가하는 것은 괜찮습니다. 심사위원이 페이지를 새로고침하면 보입니다.</p>
+    </section>
+
+    <section>
+      <h2 class="cat-title"><span class="cat-title__no">06</span><span class="cat-title__name">다음 행사</span></h2>
+      <ul class="guide-list">
+        <li><b>새 시트로 하기:</b> 지난 시트에서 <b>[파일 → 사본 만들기]</b>를 하고, 사본에서 03(배포)을 다시 합니다. 링크가 새로 생기고, 지난 결과와 완전히 나뉩니다.</li>
+        <li><b>같은 시트로 하기:</b> <b>[발표 심사 → 결과 보관하고 새 행사 시작]</b>을 누릅니다. 응답 탭이 '보관…' 이름으로 남고, 링크는 그대로 씁니다. 그다음 탭 3개를 새 행사에 맞게 고칩니다.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="cat-title"><span class="cat-title__no">07</span><span class="cat-title__name">점수 계산 방식</span></h2>
+      <ol class="steps">
+        <li>항목마다 고른 등급을 [평가항목] 탭의 점수로 바꿉니다. (예: 배점 45점 항목의 B = 40.5점)</li>
+        <li>심사위원마다 항목 점수를 더해 총점을 냅니다.</li>
+        <li>발표자마다 <b>평가한 심사위원들의 총점 평균</b>을 냅니다. "평가 안 함"은 평균에서 빠집니다.</li>
+        <li>부문 안에서 평균이 높은 순서로 순위를 매깁니다. 평균이 같으면 같은 순위입니다(1, 2, 2, 4).</li>
+      </ol>
+      <p class="muted small guide-note">관리자 화면의 "합계"는 참고용입니다. 평가한 심사위원 수가 발표자마다 다르면 합계로는 비교할 수 없습니다.</p>
+    </section>
+
+    <section>
+      <h2 class="cat-title"><span class="cat-title__no">08</span><span class="cat-title__name">문제 해결</span></h2>
+      <div class="table-wrap">
+        <table class="table guide-table">
+          <thead><tr><th>화면에 나온 말</th><th>확인할 것</th></tr></thead>
+          <tbody>
+            <tr><td>서버에 연결하지 못했습니다</td><td>웹 앱 배포의 액세스가 <b>모든 사용자</b>인지, 링크의 <code>?s=</code> 뒤가 잘리지 않았는지 확인합니다.</td></tr>
+            <tr><td>연결된 시트를 찾지 못했습니다</td><td>배포를 지웠거나 링크가 틀린 경우입니다. 시트 메뉴 [발표 심사 → 심사 링크 보기]의 링크를 다시 보내세요.</td></tr>
+            <tr><td>시트의 행사 설정에 문제가 있어서 열 수 없습니다</td><td>[발표 심사 → 설정 점검]을 눌러 오류를 고칩니다. 보통 [평가항목]과 [발표자] 탭의 발표유형 이름이 다른 경우입니다.</td></tr>
+            <tr><td>관리자 비밀번호를 먼저 적어 주세요</td><td>[설정] 탭의 관리자 비밀번호 칸을 채웁니다.</td></tr>
+            <tr><td>심사위원 이름 오타로 두 명처럼 집계됨</td><td>시트의 응답 탭(<code>응답_발표유형</code>)에서 심사위원 칸을 직접 고칩니다.</td></tr>
+            <tr><td>코드를 고쳤는데 그대로임</td><td>코드를 고쳤을 때만 [배포 → 배포 관리 → 수정(연필) → 버전: 새 버전 → 배포]를 합니다. 링크는 그대로입니다.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script>
+    (() => {
+      "use strict";
+      const site = window.EVAL_SITE || {};
+      if (site.templateUrl) {
+        document.getElementById("template-way").hidden = false;
+        document.getElementById("template-link").href = site.templateUrl;
+        document.getElementById("code-way-title").textContent = "방법 2. 새 시트에 코드 붙여 넣기";
+      }
+
+      const btn = document.getElementById("copy-code-btn");
+      const msg = document.getElementById("copy-code-msg");
+      btn.addEventListener("click", async () => {
+        try {
+          const res = await fetch("apps-script/Code.gs", { cache: "no-store" });
+          if (!res.ok) throw new Error(res.status);
+          await navigator.clipboard.writeText(await res.text());
+          msg.textContent = "복사했습니다. Apps Script 편집기에 붙여 넣으세요.";
+        } catch (e) {
+          msg.textContent = "복사하지 못했습니다. [코드 파일 열기]에서 전체 선택(Ctrl+A) 후 복사해 주세요.";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
