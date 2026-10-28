@@ -9,7 +9,7 @@ window.EVAL_SITE = {
    * 템플릿 시트를 만든 뒤 그 시트 주소의 /edit… 부분을 /copy 로 바꿔 넣으세요.
    * 예) "https://docs.google.com/spreadsheets/d/1AbC…/copy"
    * 비워 두면 버튼 대신 "새 시트에 코드 붙여 넣기" 방법만 안내합니다. */
-  templateUrl: "",
+  templateUrl: "https://docs.google.com/spreadsheets/d/1-XZbAJG4evlve1oE3qHaKgLkoCxxiLuBdAuAg1ssWaE/copy",
 
   /* 링크에 ?s= 가 없을 때 연결할 Apps Script 배포 ID.
    * 비워 두면 ?s= 없이 연 화면은 샘플 행사(테스트 모드)가 됩니다. 공용으로 쓸 때는 비워 두세요. */
