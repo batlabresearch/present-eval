@@ -71,6 +71,7 @@ class Sheet {
 class Spreadsheet {
   constructor() { this.sheets = [new Sheet("시트1")]; }
   getId() { return "mock-spreadsheet-0001"; }
+  getUrl() { return "https://docs.google.com/spreadsheets/d/mock-spreadsheet-0001/edit"; }
   getSpreadsheetTimeZone() { return "Asia/Seoul"; }
   getSheets() { return this.sheets.slice(); }
   getSheetByName(name) { return this.sheets.find((s) => s.name === name) || null; }

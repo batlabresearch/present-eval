@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=3">
+  <link rel="stylesheet" href="assets/style.css?v=4">
 </head>
 <body class="is-stage">
   <div class="demo-banner" id="demo-banner" hidden>
@@ -57,15 +57,20 @@
         <button class="go" id="start-btn" type="submit" disabled>
           <span>평가 시작</span><span class="go__arrow" aria-hidden="true">→</span>
         </button>
-        <button class="ghost-btn ghost-btn--split" id="admin-open" type="button" aria-haspopup="dialog">
-          <span>관리자 페이지</span><span class="go__arrow" aria-hidden="true">↗</span>
-        </button>
+        <div class="entry__links">
+          <button class="ghost-btn ghost-btn--split" id="results-open" type="button" aria-haspopup="dialog">
+            <span>결과 보기</span><span class="go__arrow" aria-hidden="true">↗</span>
+          </button>
+          <a class="ghost-btn ghost-btn--split" id="sheet-open" href="#" target="_blank" rel="noopener" hidden>
+            <span>관리자 페이지</span><span class="go__arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
       </form>
     </div>
 
     <footer class="site-foot">
       <div class="site-foot__inner">
-        <img class="site-foot__logo" src="assets/snuh-dtm-logo.png?v=3" alt="SNUH 융합의학과" width="308" height="46">
+        <img class="site-foot__logo" src="assets/snuh-dtm-logo.png?v=4" alt="SNUH 융합의학과" width="308" height="46">
         <p class="site-foot__contact">사용문의: <a href="mailto:69009@snuh.org">69009@snuh.org</a></p>
       </div>
     </footer>
@@ -130,10 +135,10 @@
     </div>
   </section>
 
-  <script src="config.js?v=3"></script>
-  <script src="assets/sample-config.js?v=3"></script>
-  <script src="assets/common.js?v=3"></script>
-  <script src="assets/hero-art.js?v=3"></script>
-  <script src="assets/app.js?v=3"></script>
+  <script src="config.js?v=4"></script>
+  <script src="assets/sample-config.js?v=4"></script>
+  <script src="assets/common.js?v=4"></script>
+  <script src="assets/hero-art.js?v=4"></script>
+  <script src="assets/app.js?v=4"></script>
 </body>
 </html>

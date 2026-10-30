@@ -477,8 +477,8 @@
     showScreen("start");
   });
 
-  /* ── 관리자 페이지로 가기 ─────────────────────────────────── */
-  // 비밀번호를 먼저 시트에 확인하고, 맞을 때만 관리자 화면으로 넘어간다.
+  /* ── 결과 보기 · 관리자 페이지 ────────────────────────────── */
+  // [결과 보기]: 비밀번호를 먼저 시트에 확인하고, 맞을 때만 결과(관리자) 화면으로 넘어간다.
   // 확인한 비밀번호는 이 탭의 sessionStorage에 넘겨서 관리자 화면이 다시 묻지 않게 한다 (탭을 닫으면 지워짐).
   const ADMIN_PASSWORD_KEY = common.key("admin-password");   // admin.js와 같은 이름
 
@@ -497,7 +497,7 @@
     backdrop.className = "modal-backdrop";
     backdrop.innerHTML = `
       <form class="modal" role="dialog" aria-modal="true" aria-labelledby="admin-gate-title" novalidate>
-        <h2 class="modal__title" id="admin-gate-title">관리자 페이지</h2>
+        <h2 class="modal__title" id="admin-gate-title">결과 보기</h2>
         <div class="modal__body">
           <label class="field">
             <span class="field__label">관리자 비밀번호</span>
@@ -552,7 +552,18 @@
     input.focus();
   }
 
-  $("#admin-open").addEventListener("click", openAdminGate);
+  $("#results-open").addEventListener("click", openAdminGate);
+
+  // [관리자 페이지]: 이 행사의 구글 시트를 새 탭으로 연다 (시트를 공유받은 사람만 열린다).
+  // 샘플 행사는 템플릿 시트를 보여 주고, 시트 주소를 모르면(예전 시트 코드) 버튼을 숨긴다.
+  function bindSheetLink() {
+    const template = String((window.EVAL_SITE || {}).templateUrl || "").replace(/\/copy$/, "/edit");
+    const url = config.sheetUrl || (api.isDemo ? template : "");
+    const link = $("#sheet-open");
+    const ok = /^https:\/\/docs\.google\.com\//.test(url);
+    link.hidden = !ok;
+    if (ok) link.href = url;
+  }
 
   /* ── 대화상자 ─────────────────────────────────────────────── */
   function showDialog({ title, body, actions }) {
@@ -640,6 +651,7 @@
     bindHero();
     renderLegend();
     renderTypeChoices();
+    bindSheetLink();
     renderStart({ judge: storage.get(LAST_JUDGE_KEY) || "" });
     $("#boot-notice").hidden = !common.fromCache;
     $("#start-form").dataset.state = "ready";

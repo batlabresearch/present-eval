@@ -184,7 +184,10 @@ function results_(req) {
  * [설정]·[평가항목]·[발표자] 탭을 읽어 화면에서 쓰는 설정으로 바꾼다.
  * 잘못 적힌 줄은 빼고 경고로 알려 준다 (행사 중 한 줄 실수로 화면 전체가 멈추지 않게). */
 function loadConfig_(ss) {
-  return buildConfig_(readTabs_(ss), eventId_(ss));
+  const built = buildConfig_(readTabs_(ss), eventId_(ss));
+  // 첫 화면 [관리자 페이지] 버튼이 여는 이 시트의 주소 (시트를 공유받은 사람만 열 수 있다)
+  if (built.config) built.config.sheetUrl = ss.getUrl();
+  return built;
 }
 
 function readTabs_(ss) {

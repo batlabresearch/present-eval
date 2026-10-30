@@ -98,10 +98,11 @@ const submit = (judge, gradesFor, extra = {}) => g.post(Object.assign({
   criteria: oral.criteria.map((c) => c.label), rows: rowsFor(gradesFor)
 }, extra));
 
-test("설정 요청: 공개 설정만, 비밀번호 없음", () => {
+test("설정 요청: 공개 설정만, 비밀번호 없음, 시트 주소 포함", () => {
   assert.equal(cfg.ok, true);
   assert.equal(cfg.config.eventId, g.props.EVENT_ID);
   assert.ok(!("password" in cfg.config));
+  assert.equal(cfg.config.sheetUrl, "https://docs.google.com/spreadsheets/d/mock-spreadsheet-0001/edit");
 });
 
 test("비밀번호가 비어 있으면 결과 조회 불가", () => {

@@ -307,6 +307,9 @@ button, input, textarea, select { font: inherit; color: inherit; }
 .ghost-btn:hover { border-color: #fff; }
 .ghost-btn--split { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 0 20px; text-align: left; }
 .ghost-btn--split .go__arrow { color: var(--cyan); }
+/* 첫 화면 아래 버튼 두 개 (결과 보기 · 관리자 페이지). 하나만 보이면 한 칸을 다 쓴다 */
+.entry__links { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 10px; }
+.entry__links .ghost-btn--split { padding: 0 16px; }
 
 /* ════════════════════════════════════════════════════════════
    평가 화면 (심사표)
