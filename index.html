@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=2">
+  <link rel="stylesheet" href="assets/style.css?v=3">
 </head>
 <body class="is-stage">
   <div class="demo-banner" id="demo-banner" hidden>
@@ -18,12 +18,12 @@
   </div>
 
   <!-- 1. 첫 화면: 심사위원 이름 + 발표 유형 선택 -->
-  <section class="stage" id="screen-start">
+  <section class="stage stage--start" id="screen-start">
     <div class="stage__art" data-hero-art></div>
 
     <div class="stage__inner">
       <header class="masthead">
-        <p class="masthead__tagline" data-bind="hero-tagline"></p>
+        <p class="masthead__tagline masthead__credit">융합의학과 제공</p>
         <p class="masthead__org">
           <span data-bind="hero-org"></span>
           <span class="masthead__org-en" data-bind="hero-org-en"></span>
@@ -36,7 +36,6 @@
           <span class="title-block__main" data-bind="hero-display"></span>
           <span class="title-block__sub" data-bind="hero-display-sub"></span>
         </h1>
-        <p class="title-block__role">융합의학과 제공</p>
       </div>
 
       <form class="entry" id="start-form" data-state="loading" novalidate>
@@ -63,6 +62,13 @@
         </button>
       </form>
     </div>
+
+    <footer class="site-foot">
+      <div class="site-foot__inner">
+        <img class="site-foot__logo" src="assets/snuh-dtm-logo.png?v=3" alt="SNUH 융합의학과" width="308" height="46">
+        <p class="site-foot__contact">사용문의: <a href="mailto:69009@snuh.org">69009@snuh.org</a></p>
+      </div>
+    </footer>
   </section>
 
   <!-- 2. 평가 화면 (심사표) -->
@@ -124,10 +130,10 @@
     </div>
   </section>
 
-  <script src="config.js?v=2"></script>
-  <script src="assets/sample-config.js?v=2"></script>
-  <script src="assets/common.js?v=2"></script>
-  <script src="assets/hero-art.js?v=2"></script>
-  <script src="assets/app.js?v=2"></script>
+  <script src="config.js?v=3"></script>
+  <script src="assets/sample-config.js?v=3"></script>
+  <script src="assets/common.js?v=3"></script>
+  <script src="assets/hero-art.js?v=3"></script>
+  <script src="assets/app.js?v=3"></script>
 </body>
 </html>

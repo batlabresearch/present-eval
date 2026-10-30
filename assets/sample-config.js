@@ -7,7 +7,6 @@ window.EVAL_SAMPLE = {
   "hero": {
     "org": "OO대학교 OO학과",
     "orgEn": "Department of Sample Studies",
-    "tagline": "발표를 공정하게, 결과는 바로",
     "display": "2026",
     "displaySub": "ACADEMIC FESTIVAL"
   },

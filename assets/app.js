@@ -596,7 +596,6 @@
       el.hidden = !value;
     });
     bind("event-title", config.eventTitle);
-    bind("hero-tagline", hero.tagline);
     bind("hero-org", hero.org);
     bind("hero-display", hero.display);
     bind("hero-display-sub", hero.displaySub);

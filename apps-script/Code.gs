@@ -41,7 +41,6 @@ const SETTING_KEYS = {
   "관리자 비밀번호": "password",
   "큰 제목": "display",
   "큰 제목 둘째 줄": "displaySub",
-  "슬로건": "tagline",
   "기관명": "org",
   "기관 영문명": "orgEn",
   "의견 칸 이름": "commentLabel"
@@ -338,7 +337,6 @@ function buildConfig_(tabs, eventId) {
       hero: {
         org: settings.org || "",
         orgEn: settings.orgEn || "",
-        tagline: settings.tagline || "",
         display: settings.display || "",
         displaySub: settings.displaySub || ""
       },
@@ -535,7 +533,6 @@ function sampleTabs_() {
       ["관리자 비밀번호", "", "결과(관리자 화면)를 볼 때 쓰는 비밀번호. 꼭 정해 주세요"],
       ["큰 제목", "2026", "첫 화면의 큰 글씨. 짧을수록 크게 보입니다 (예: DTM)"],
       ["큰 제목 둘째 줄", "ACADEMIC FESTIVAL", "큰 글씨 아래 줄. 비우면 나오지 않습니다"],
-      ["슬로건", "발표를 공정하게, 결과는 바로", "첫 화면 맨 위 한 줄. 비우면 나오지 않습니다"],
       ["기관명", "OO대학교 OO학과", "첫 화면 오른쪽 위. 비우면 나오지 않습니다"],
       ["기관 영문명", "Department of Sample Studies", "단어마다 줄을 바꾸고 첫 글자를 강조합니다. 비우면 나오지 않습니다"],
       ["의견 칸 이름", "심사의견", "발표자마다 자유롭게 쓰는 칸의 이름"]
